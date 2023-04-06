@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to ImaginationStation!</h1>
+</div>
+
+<div class="d-flex justify-content-between">
+@await Html.PartialAsync("_Register")
+@await Html.PartialAsync("_Login")
+</div>

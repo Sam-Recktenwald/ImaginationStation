@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Add Post Page";
+}
+
+@model Post
+
+<div>
+    @await Html.PartialAsync("_NavBar")
+</div>
+
+<div class="m-3">
+    <h1 class="text-center">Make a Post</h1>
+    <form asp-action="CreatePost" asp-controller="Post" method="post">
+        <div class="m-3">
+            <label asp-for="ImageURL"></label>
+            <input asp-for="ImageURL" class="form-control">
+            <span asp-validation-for="ImageURL" class="text-danger"></span>
+        </div>
+        <div class="m-3">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="m-3">
+            <label asp-for="Medium"></label>
+            <input asp-for="Medium" class="form-control">
+            <span asp-validation-for="Medium" class="text-danger"></span>
+        </div>
+        <div class="m-3">
+            <label asp-for="ForSale">For Sale?</label>
+            <input asp-for="ForSale">
+            <span asp-validation-for="ForSale" class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-end m-3">
+            <button type="submit" class="btn btn-success">Post</button>
+        </div>
+    </form>
+</div>

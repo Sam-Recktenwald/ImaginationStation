@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "One Post Page";
+}
+
+@model Post
+
+<div>
+    @await Html.PartialAsync("_NavBar")
+</div>
+
+<div>
+    <h1>@Model.Title</h1>
+</div>
+<div class="d-flex justify-content-around">
+    <div>
+        <img src="@Model.ImageURL" alt="@Model.Title">
+    </div>
+    <div>
+        <h3>By: @Model.Creator.Name</h3>
+        <h3>Medium: @Model.Medium</h3>
+        @if (@Model.ForSale == true)
+        {
+            <h3 class="card-text">For Sale</h3>
+        }
+        else
+        {
+            <h3 class="card-text">Not For Sale</h3>
+        }
+        <div class="d-flex">
+            <h3 class="mt-2">@Model.PostLikes.Count() Likes</h3>
+            @{bool alreadyLiked = @Model.PostLikes.Any(pl => pl.UserId == Context.Session.GetInt32("UserId"));}
+            @if (Context.Session.GetInt32("UserId") != @Model.UserId)
+            {
+                <form asp-action="Like" asp-controller="Post" asp-route-PostId="@Model.PostId">
+                    @if (alreadyLiked)
+                    {
+                        <button class="btn btn-link">
+                            <h3>Un-Like</h3>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-link">
+                            <h3>Like</h3>
+                        </button>
+                    }
+                </form>
+            }
+        </div>
+        <div class="d-flex justify-content-around">
+            @if (Context.Session.GetInt32("UserId") == @Model.UserId)
+            {
+                <a asp-action="Edit" asp-controller="Post" asp-route-PostId="@Model.PostId" class="btn btn-link">Edit</a>
+            }
+            @if (Context.Session.GetInt32("UserId") == @Model.UserId)
+            {
+                <form asp-action="DeletePost" asp-controller="Post" asp-route-PostId="@Model.PostId">
+                    <button class="btn btn-link">Delete</button>
+                </form>
+            }
+        </div>
+    </div>
+</div>

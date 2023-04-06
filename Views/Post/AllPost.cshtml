@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "All Posts Page";
+}
+
+@model List<Post>
+
+<div>
+    @await Html.PartialAsync("_NavBar")
+</div>
+
+@foreach (Post post in Model)
+{
+    <div class="d-flex justify-content-center">
+    <div class="card m-3 p-3">
+        <img src="@post.ImageURL" alt="@post.Title" class="card-img-top" style="width: 400px">
+        <div class="card-body">
+            <h3>
+                <a asp-action="ShowOne" asp-controller="Post" asp-route-PostId="@post.PostId">@post.Title</a>
+            </h3>
+            <p class="card-text">By: @post.Creator.Name</p>
+            <p class="card-text">Medium: @post.Medium</p>
+            @if(@post.ForSale == true)
+            {
+                <p class="card-text">For Sale</p>
+            }
+            else
+            {
+                <p class="card-text">Not For Sale</p>
+            }
+            <div class="d-flex">
+                @{bool alreadyLiked = post.PostLikes.Any(pl => pl.UserId == Context.Session.GetInt32("UserId"));}
+                @if (Context.Session.GetInt32("UserId") != @post.UserId)
+                    {
+                        <form asp-action="Like" asp-controller="Post" asp-route-PostId="@post.PostId">
+                            @if (alreadyLiked)
+                            {
+                                <button class="btn btn-link">
+                                    <span>Un-Like</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-link">
+                                    <span>Like</span>
+                                </button>
+                            }
+                        </form>
+                    }
+                <p class="card-text m-2">@post.PostLikes.Count() Likes</p>
+            </div>
+            <div class="d-flex justify-content-around">
+                @if (Context.Session.GetInt32("UserId") == @post.UserId)
+                    {
+                        <a asp-action="Edit" asp-controller="Post" asp-route-PostId="@post.PostId" class="btn btn-link">Edit</a>
+                    }
+                    @if (Context.Session.GetInt32("UserId") == @post.UserId)
+                    {
+                        <form asp-action="DeletePost" asp-controller="Post" asp-route-PostId="@post.PostId">
+                            <button class="btn btn-link">Delete</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
