@@ -1,7 +1,8 @@
 # ImaginationStation
 An Instagram-esque app that allows users to post, view, and like art work. This C# project utilized ASP.NET Core framework in order to increase performance and provide built-in secutrity features. I also used Entity Framework to easily connect to MySQL to help with query optimization and scalability.
 
-! [gif of a demo of the app] (https://imgur.com/khmA7hB.gif)
+![Demo gif](https://user-images.githubusercontent.com/103951520/231536605-9395cc80-3622-45e1-8d4f-6b75f93e1675.gif)
+
 
 # Features
 * Ability to register and login
